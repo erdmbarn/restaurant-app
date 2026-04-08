@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: restaurant-api
+  data:
+    mongodb:
+      uri: ${MONGO_URI:mongodb://localhost:27017/restaurant_db}
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET:restaurant-super-secret-key-must-be-at-least-256-bits-long-for-hs256}
+  expiration: 86400000  # 24 saat (ms)
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    com.aselsan.restaurant: DEBUG

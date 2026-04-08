@@ -1,0 +1,18 @@
+﻿# Maven
+restaurant-api/target/
+
+# Node
+restaurant-frontend/node_modules/
+restaurant-frontend/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
