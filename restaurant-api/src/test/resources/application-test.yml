@@ -1,0 +1,12 @@
+spring:
+  data:
+    mongodb:
+      auto-index-creation: true
+
+jwt:
+  secret: test-secret-key-must-be-at-least-256-bits-long-for-hs256-algorithm
+  expiration: 3600000
+
+logging:
+  level:
+    com.aselsan.restaurant: DEBUG
