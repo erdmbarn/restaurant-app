@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: restaurant-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: restaurant_db
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - restaurant-net
+
+  restaurant-api:
+    build: .
+    container_name: restaurant-api
+    ports:
+      - "8080:8080"
+    environment:
+      MONGO_URI: mongodb://mongodb:27017/restaurant_db
+      JWT_SECRET: restaurant-super-secret-key-must-be-at-least-256-bits-long-for-hs256
+    depends_on:
+      - mongodb
+    networks:
+      - restaurant-net
+
+volumes:
+  mongo_data:
+
+networks:
+  restaurant-net:
+    driver: bridge
