@@ -166,8 +166,29 @@ export default function MenuPage() {
                   </div>
                 )}
                 <div className="card sticky top-4">
-                  <h2 className="text-lg font-bold text-gray-800 mb-4">Sepetim</h2>
-                  {totalItems === 0 ? <p className="text-gray-400 text-sm text-center py-6">Urun eklenmedi</p> : (
+  <h2 className="text-lg font-bold text-gray-800 mb-4">Sepetim</h2>
+  
+  {/* Minimum tutar bar */}
+  <div className="mb-4">
+    <div className="flex justify-between text-xs text-gray-500 mb-1">
+      <span>Minimum siparis tutari</span>
+      <span>TL{Math.min(totalPrice, 200).toFixed(0)} / TL200</span>
+    </div>
+    <div className="w-full bg-gray-200 rounded-full h-2">
+      <div
+        className={`h-2 rounded-full transition-all ${totalPrice >= 200 ? 'bg-green-500' : 'bg-orange-400'}`}
+        style={{ width: `${Math.min((totalPrice / 200) * 100, 100)}%` }}>
+      </div>
+    </div>
+    {totalPrice < 200 && (
+      <p className="text-xs text-orange-500 mt-1">TL{(200 - totalPrice).toFixed(0)} daha ekleyin</p>
+    )}
+    {totalPrice >= 200 && (
+      <p className="text-xs text-green-500 mt-1">Minimum tutara ulastiniz!</p>
+    )}
+  </div>
+
+  {totalItems === 0 ? <p className="text-gray-400 text-sm text-center py-6">Urun eklenmedi</p> : (
                     <>
                       <div className="space-y-2 mb-4">
                         {Object.entries(cart).map(([id, qty]) => {
@@ -181,7 +202,9 @@ export default function MenuPage() {
                         {discountAmount > 0 && <div className="flex justify-between text-sm text-green-600"><span>Indirim (%{discountRate * 100})</span><span>-TL{discountAmount.toFixed(2)}</span></div>}
                         <div className="flex justify-between font-bold text-gray-800 pt-1 border-t"><span>Toplam</span><span className="text-orange-500">TL{finalPrice.toFixed(2)}</span></div>
                       </div>
-                      <button onClick={handleOrder} disabled={ordering} className="btn-primary w-full py-3">{ordering ? 'Veriliyor...' : 'Siparis Ver'}</button>
+                      <button onClick={handleOrder} disabled={ordering || totalPrice < 200} className="btn-primary w-full py-3">
+  {ordering ? 'Veriliyor...' : totalPrice < 200 ? `TL${(200 - totalPrice).toFixed(0)} eksik` : 'Siparis Ver'}
+</button>
                     </>
                   )}
                 </div>
